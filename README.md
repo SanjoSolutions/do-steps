@@ -17,8 +17,6 @@ Then run:
 do-steps instructions.md
 ```
 
-(this is an alias)
-
 Then the program asks you for each step to confirm it.
 
 For steps that instruct to run a command, the program can run the command automatically.
