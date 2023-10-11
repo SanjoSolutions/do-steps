@@ -51,8 +51,10 @@ while (session.action < actions.length) {
     console.log(action.information)
   } else if (action.type === 'instructionToWriteCodeInAFile') {
     console.log(action.instruction)
-    await createFile(action.filePath)
-    await readLine.question('Press enter to continue. ')
+    const hasFileBeenCreated = await createFile(action.filePath)
+    if (hasFileBeenCreated) {
+      await readLine.question('Press enter to continue. ')
+    }
   } else if (action.type === 'runCommand') {
     await runCommand(action)
   } else if (action.type === 'writeCode') {
@@ -86,21 +88,26 @@ async function createFile(filePath, content = null) {
   }
 
   if (question) {
-    await askQuestion(readLine, question, [
+    return await askQuestion(readLine, question, [
       {
         text: 'y',
         isDefault: true,
         async handler() {
           await fs.mkdir(path.dirname(filePath), { recursive: true })
           await fs.writeFile(filePath, content ?? '', { encoding: 'utf-8' })
+          return true
         },
       },
       {
         text: 'n',
-        handler() {},
+        handler() {
+          return false
+        },
       },
     ])
   }
+
+  return false
 }
 
 async function createFileObject(filePath) {
