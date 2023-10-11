@@ -1,6 +1,6 @@
 {
   "name": "do-steps",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "A CLI program which can process the steps that GitHub Copilot Chat might produce.",
   "type": "module",
   "bin": {
@@ -17,8 +17,9 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
+    "@sanjo/read-json": "^1.0.0",
+    "@sanjo/write-json": "^1.0.0",
     "@types/node": "^18",
-    "markdown-it": "^13.0.2",
     "marked": "^9.1.0"
   }
 }
