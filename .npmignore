@@ -1,0 +1,4 @@
+/test*
+/.vscode
+/babel.config.cjs
+/processInstructions.spec.js
