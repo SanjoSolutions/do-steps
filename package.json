@@ -1,8 +1,9 @@
 {
-  "name": "do-github-copilot-chat-steps",
+  "name": "do-steps",
+  "version": "0.1.0",
+  "description": "A CLI program which can process the steps that GitHub Copilot Chat might produce.",
   "type": "module",
   "bin": {
-    "do": "./index.js",
     "do-steps": "./index.js"
   },
   "scripts": {
