@@ -1,5 +1,4 @@
 import fs from 'fs'
-import path from 'path'
 import { execSync } from 'child_process'
 import { processInstructions } from './processInstructions.js'
 import * as readline from 'node:readline/promises'
@@ -7,7 +6,7 @@ import * as readline from 'node:readline/promises'
 const filePath = process.argv[2]
 
 if (!filePath) {
-  console.error('Please provide a path to a text file.')
+  console.error('Please provide a path to a Markdown file.')
   process.exit(1)
 }
 
