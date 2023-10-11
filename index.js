@@ -19,6 +19,8 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
+// TODO: Make it possible to continue the last session. Ask if the user would like to continue the last session (if there was one).
+
 for (const action of actions) {
   if (action.type === 'instruction') {
     console.log(action.instruction)
@@ -44,6 +46,9 @@ for (const action of actions) {
     const answer = await rl.question(`Overwriting ${filePath} ([y]/n): `)
     const answerLowerCase = answer.toLowerCase()
     if (answerLowerCase === 'y' || answerLowerCase === '') {
+      // TODO: Make sure that there is a backup.
+      // If the current version of the file is committed to Git it seems fine.
+      // Otherwise: create a backup.
       // fs.writeFileSync(filePath, code)
       // console.log(`Code written to file: ${filePath}`)
     } else if (answerLowerCase === 'n') {
