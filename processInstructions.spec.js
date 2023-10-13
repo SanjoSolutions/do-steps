@@ -352,13 +352,17 @@ a {
 
     const expectedActions = [
       {
+        type: 'instruction',
+        instruction: "1. Set up an AWS account if you don't have one already.",
+      },
+      {
         type: 'runCommand',
-        instruction: '1. Use the Amplify CLI to create a new Amplify project.',
+        instruction: '2. Use the Amplify CLI to create a new Amplify project.',
         command: 'amplify init',
       },
       {
         type: 'runCommands',
-        instruction: '2. Add the API and database resources you need.',
+        instruction: '3. Add the API and database resources you need.',
         commands: ['amplify add api', 'amplify add storage'],
       },
     ]

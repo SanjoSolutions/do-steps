@@ -57,6 +57,8 @@ while (session.action < actions.length) {
     }
   } else if (action.type === 'runCommand') {
     await runCommand(action)
+  } else if (action.type === 'runCommands') {
+    await runCommands(action)
   } else if (action.type === 'writeCode') {
     await createFile(action.filePath, action.code)
   }
@@ -230,24 +232,37 @@ async function saveSession(session) {
 }
 
 async function runCommand(action) {
+  await runACommand(action.command, action.instruction)
+}
+
+async function runCommands(action) {
+  console.log(action.instruction)
+  for (const command of action.commands) {
+    await runACommand(command)
+  }
+}
+
+async function runACommand(command, instruction = null) {
   let thereWasAnError
   do {
-    console.log(action.instruction)
+    if (instruction) {
+      console.log(instruction)
+    }
     const answer = await readLine.question(
-      `Run \`${action.command}\` ([y]/n/alternative command): `
+      `Run \`${command}\` ([y]/n/alternative command): `
     )
     const answerLowerCase = answer.toLowerCase()
     if (answerLowerCase === 'y' || answerLowerCase == '') {
       try {
         thereWasAnError = false
-        execSync(action.command, {
+        execSync(command, {
           stdio: 'inherit',
         })
       } catch (error) {
         thereWasAnError = true
       }
     } else if (answerLowerCase === 'n') {
-      return
+      continue
     } else {
       try {
         thereWasAnError = false

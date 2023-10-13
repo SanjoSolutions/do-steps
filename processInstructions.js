@@ -20,31 +20,32 @@ export function processInstructions(fileContents) {
         information: token.text,
       })
     } else if (token.type === 'list') {
-      if (
-        token.items.length === 1 &&
-        tokens[i + 1]?.type === 'space' &&
-        tokens[i + 2]?.type === 'code'
-      ) {
-        const codeToken = tokens[i + 2]
-        const commands = codeToken.text.split('\n')
-        const instruction = token.items[0].raw
-        if (commands.length === 1) {
-          actions.push({
-            type: 'runCommand',
-            instruction,
-            command: commands[0],
-          })
-        } else {
-          actions.push({
-            type: 'runCommands',
-            instruction,
-            commands,
-          })
-        }
+      for (let index = 0; index < token.items.length; index++) {
+        const item = token.items[index]
+        if (
+          index === token.items.length - 1 &&
+          tokens[i + 1]?.type === 'space' &&
+          tokens[i + 2]?.type === 'code'
+        ) {
+          const codeToken = tokens[i + 2]
+          const commands = codeToken.text.split('\n')
+          const instruction = item.raw
+          if (commands.length === 1) {
+            actions.push({
+              type: 'runCommand',
+              instruction,
+              command: commands[0],
+            })
+          } else {
+            actions.push({
+              type: 'runCommands',
+              instruction,
+              commands,
+            })
+          }
 
-        i += 2
-      } else {
-        for (const item of token.items) {
+          i += 2
+        } else {
           const text = item.raw
           const textToken = item.tokens[0]
           let hadAnyCommands = false
