@@ -3,7 +3,10 @@ import fs from 'fs/promises'
 
 describe('processInstructions', () => {
   it('should extract the correct actions from the file contents', async () => {
-    const fileContents = await fs.readFile('instructions.md', 'utf-8')
+    const fileContents = await fs.readFile(
+      'test-files/instructions.md',
+      'utf-8'
+    )
 
     const expectedActions = [
       {
@@ -335,6 +338,28 @@ a {
         type: 'information',
         information:
           'Note that this is just an example implementation and there are many ways to build a web app with Next.js and AWS Amplify.',
+      },
+    ]
+
+    expect(processInstructions(fileContents)).toEqual(expectedActions)
+  })
+
+  it('should extract the correct actions from the file contents 2', async () => {
+    const fileContents = await fs.readFile(
+      'test-files/instructions2.md',
+      'utf-8'
+    )
+
+    const expectedActions = [
+      {
+        type: 'runCommand',
+        instruction: '1. Use the Amplify CLI to create a new Amplify project.',
+        command: 'amplify init',
+      },
+      {
+        type: 'runCommands',
+        instruction: '2. Add the API and database resources you need.',
+        commands: ['amplify add api', 'amplify add storage'],
       },
     ]
 
